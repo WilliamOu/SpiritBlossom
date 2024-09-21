@@ -1,0 +1,16 @@
+
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="..\tModLoader.targets" />
+  <PropertyGroup>
+    <AssemblyName>UnforgottenBuffed</AssemblyName>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CalamityMod">
+      <HintPath>..\..\ModReader\CalamityMod\CalamityMod.dll</HintPath>
+    </Reference>
+    <Reference Include="StarsAbove">
+      <HintPath>..\..\ModReader\StarsAbove\StarsAbove.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

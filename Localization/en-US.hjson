@@ -1,0 +1,140 @@
+Mods: {
+	SpiritBlossom: {
+		Items: {
+			Spirit: {
+				DisplayName: Spirit Blossom DEPRECATED
+				Tooltip:
+					'''
+					[c/FF5858:This weapon is autoswing, and has a multitude of attacks and abilities]
+					[c/8E60D1:Way of the Hunter]
+					Attacks will alternate between two katanas: [c/85C4DA:Steel Wind] and [c/F10079:Spirit Azakana]
+					[c/85C4DA:Steel Wind] has a 50% critical hit rate independent of other crit calculations
+					[c/F10079:Spirit Azakana] has no knockback and cannot critically strike but repeats half the damage dealt as true damage
+					[c/8E60D1:Mortal Steel]
+					Right click to thrust forward, consuming 50 mana and dealing damage with a bonus effect depending on the preluding slash
+					If the last sword swung was [c/85C4DA:Steel Wind], the thrust will inflict [c/8E60D1:Mortal Wounds] to all targets struck, dealing damage over the next 10 seconds
+					If the last sword swung was [c/F10079:Spirit Azakana], purge all targets afflicted with [c/8E60D1:Mortal Wounds] for 2000% critical damage
+					[c/8E60D1:Soul Unbound]\nHold up while pressing right click to perform [c/8E60D1:Soul Unbound]
+					[c/8E60D1:Soul Unbound] will launch you forward and grant bonus movement speed for 8 seconds
+					Once [c/8E60D1:Soul Unbound] ends, all nearby foes take damage equal to 33% of the damage you inflicted with this weapon during this ability's duration
+					Once [c/8E60D1:Soul Unbound] ends, blink back to the position where [c/8E60D1:Soul Unbound] was casted
+					[c/8E60D1:Fate Sealed]
+					Charge right click to blink forward with blinding speed,consuming 200 mana and striking nearby targets with both swings of [c/8E60D1:Mortal Steel]
+					'No fate nor destiny! Only tomorrow'
+					[i:StarsAbove/Spatial]
+					'''
+			}
+
+			SpiritBlossom: {
+				DisplayName: Spirit Blossom
+				Tooltip: "[c/FF5858:One to Cut, One to Seal]"
+			}
+
+			ExampleUseStyleWeapon: {
+				DisplayName: Example Use Style Weapon
+				Tooltip: ""
+			}
+
+			SpiritSwords: {
+				DisplayName: Spirit Blossom
+				Tooltip: "[c/FF5858:One to Cut, One to Seal]"
+			}
+		}
+
+		Projectiles: {
+			ChannelProjectile.DisplayName: Channel Projectile
+			SpiritThrust.DisplayName: Spirit Thrust
+			SpiritThrustFlash.DisplayName: Spirit Thrust Flash
+			SpiritThrustEnhanced.DisplayName: Spirit Thrust Enhanced
+			SpiritThrustEnhancedWave.DisplayName: Spirit Thrust Enhanced Wave
+			SpiritCleave.DisplayName: Spirit Cleave
+			SpiritCleaveWave.DisplayName: Spirit Cleave Wave
+			SpiritBlink.DisplayName: Spirit Blink
+			SpiritCleaveProjectile.DisplayName: Spirit Cleave Projectile
+			MortalSteelThrust.DisplayName: Mortal Steel Thrust
+			MortalSteelThrustVFX.DisplayName: Mortal Steel Thrust V F X
+			MortalSteelWave.DisplayName: Mortal Steel Wave
+			MortalSteel.DisplayName: Mortal Steel
+			FateSealed.DisplayName: Fate Sealed
+			SoulUnbound.DisplayName: Soul Unbound
+			DeathMarkDetonation.DisplayName: Death Mark Detonation
+			DeathMarks.DisplayName: Death Marks
+			SoulUnboundRecastFlash.DisplayName: Soul Unbound Recast Flash
+			SpiritCleaveShieldDeactivate.DisplayName: Spirit Cleave Shield Deactivate
+			SpiritCleaveShield.DisplayName: Spirit Cleave Shield
+			MortalSteelFlash.DisplayName: Mortal Steel Flash
+		}
+
+		Buffs: {
+			MortalSteelKnockup: {
+				DisplayName: Mortal Steel Knockup
+				Description: Mods.UnforgottenBuffed.Buffs.MortalSteelKnockup.Description
+			}
+
+			SpiritBlossomCrowdControl: {
+				DisplayName: Spirit Blossom Crowd Control
+				Description: You are stunned by Spirit Blossom!
+			}
+
+			SoulUnboundBuff: {
+				DisplayName: Soul Unbound
+				Description: Nowhere to hide!
+			}
+
+			SoulUnboundCooldown: {
+				DisplayName: Soul Unbound
+				Description: Soul Unbound is on cooldown
+			}
+
+			SoulUnboundRecast: {
+				DisplayName: Soul Unbound
+				Description: Your mortal body beckons
+			}
+
+			DeathMark: {
+				DisplayName: Death Mark
+				Description: The Hunter knows your name
+			}
+
+			FateSealedCooldown: {
+				DisplayName: Fate Sealed Cooldown
+				Description: Fate Sealed is on cooldown
+			}
+
+			MortalSteelCooldown: {
+				DisplayName: Mortal Steel Cooldown
+				Description: Mortal Steel is on cooldown
+			}
+
+			SpiritCleaveCooldown: {
+				DisplayName: Spirit Cleave Cooldown
+				Description: Spirit Cleave is on cooldown
+			}
+
+			GatheringStorm: {
+				DisplayName: Gathering Storm [1]
+				Description: You feel the winds empower you
+			}
+
+			GatheringStormReady: {
+				DisplayName: Gathering Storm [2]
+				Description: Your strength overflows with the wind at your beck and call
+			}
+
+			MortalSteelBuff: {
+				DisplayName: Mortal Steel
+				Description: Mods.SpiritBlossom.Buffs.MortalSteelBuff.Description
+			}
+
+			FateSealedBuff: {
+				DisplayName: Fate Sealed
+				Description: Mods.SpiritBlossom.Buffs.FateSealedBuff.Description
+			}
+
+			SpiritCleaveShield: {
+				DisplayName: Spirit Cleave Shield
+				Description: Mods.SpiritBlossom.Buffs.SpiritCleaveShield.Description
+			}
+		}
+	}
+}
