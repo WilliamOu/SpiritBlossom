@@ -2,7 +2,7 @@
 An addon for the Terraria mod The Stars Above, and a full overhaul of its 1.3 predecessor, UnforgottenBuffed.
 
 # Description 
-![Demonstration](Demonstration Gif/SBDemo.gif)
+![Demonstration](https://github.com/WilliamOu/SpiritBlossom/blob/main/Demonstration/SBDemo.gif)
 Discover the Spirit Blossom swords and embrace the power of Yone from League of Legends in Terraria! Craft these elegant and lethal weapons using the Unforgotten from Stars Above, and experience a true-to-form recreation of Yone’s abilities, now fully revamped and updated for Terraria 1.4.
 
 A complete overhaul over previous versions, this mod is a true port of the character, bringing all of Yone’s iconic attacks, abilities, and stunning rotoscoped effects straight into your world. High risk, high reward; strike swiftly with his signature high-mobility moves and rushdown damage, but be prepared to master the swords' limited true melee range! Ready to challenge the Moon Lord with the full arsenal of our favorite Demon Hunter abilities?
