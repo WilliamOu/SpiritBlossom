@@ -16,7 +16,7 @@ I spent most of my summer developing this mod, mostly as a for-fun project. As s
 The mod is currently not multiplayer compatible, and various effects like Enhanced Mortal Steel's knockup, Soul Unbound's Death Mark, and Fate Sealed's pull cause enemies to disappear, among other odd side effects.
 
 # Credits
-Credit to PaperLuigi as well, the creator of The Stars Above, for giving me the permission to make this mod.
+Credit to PaperLuigi as well, the creator of The Stars Above, for giving me the permission to make this mod. Credit to Photonic0 for providing certain utility functions, and for general assistance throughout the development of this mod, alongside the ever-helpful mod developer community in the TModloader Discord server.
 
 # Legal
 Spirit Blossom was created under Riot Games' "Legal Jibber Jabber" policy using assets owned by Riot Games. Riot Games does not endorse or sponsor this project.
