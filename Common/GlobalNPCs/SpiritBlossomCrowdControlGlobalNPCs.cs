@@ -2,6 +2,8 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ModLoader;
 using SpiritBlossom.Items;
+using Terraria.ModLoader.IO;
+using System.IO;
 
 namespace SpiritBlossom.Common.GlobalNPCs
 {
@@ -17,7 +19,7 @@ namespace SpiritBlossom.Common.GlobalNPCs
             FateSealedPull
         }
 
-        public CrowdControl CurrentEffect;
+        public CrowdControl CurrentEffect = CrowdControl.None;
 
         // Mortal Steel
         public const int MaxMortalSteelKnockupDuration = 42;
@@ -99,6 +101,16 @@ namespace SpiritBlossom.Common.GlobalNPCs
             FateSealedDirectionToEndPosition = Vector2.Normalize(travelVector);
 
             npc.netUpdate = true;
+        }
+
+        public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
+        {
+            base.SendExtraAI(npc, bitWriter, binaryWriter);
+        }
+
+        public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader)
+        {
+            base.ReceiveExtraAI(npc, bitReader, binaryReader);
         }
     }
 }

@@ -11,7 +11,6 @@ using StarsAbove.Buffs;
 using StarsAbove.Items.Essences;
 using StarsAbove.Items.Materials;
 using StarsAbove.Items.Prisms;
-using StarsAbove.Projectiles;
 using SpiritBlossom.Projectiles;
 using static tModPorter.ProgressUpdate;
 using Mono.Cecil;
@@ -36,7 +35,6 @@ namespace SpiritBlossom.Items
         private int leftClickTapOrHoldThresholdCharge = 0;
         private int rightClickTapOrHoldThresholdCharge = 0;
 
-        Mod starsAbove = ModLoader.GetMod("StarsAbove");
         public override void SetStaticDefaults()
         {
             Terraria.GameContent.Creative.CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
@@ -151,15 +149,15 @@ namespace SpiritBlossom.Items
             sbPlayer.CurrentSwingResetTimer = SpiritBlossomPlayer.CurrentSwingResetTime;
             if (sbPlayer.CurrentSwing)
             {
-                Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), player.MountedCenter.X, player.MountedCenter.Y, playerDirection.X * 59f, playerDirection.Y * 59f, ProjectileType<SteelTempestSwing>(), Item.damage, 3, player.whoAmI);
+                Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), player.MountedCenter.X, player.MountedCenter.Y, playerDirection.X * 59f, playerDirection.Y * 59f, ProjectileType<Projectiles.StarsAboveSource.SteelTempestSwing>(), Item.damage, 3, player.whoAmI);
             }
             else
             {
-                Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), player.MountedCenter.X, player.MountedCenter.Y, playerDirection.X * 59f, playerDirection.Y * 59f, ProjectileType<SteelTempestSwing2>(), Item.damage, 0, player.whoAmI);
+                Projectile.NewProjectile(player.GetSource_ItemUse(player.HeldItem), player.MountedCenter.X, player.MountedCenter.Y, playerDirection.X * 59f, playerDirection.Y * 59f, ProjectileType<Projectiles.StarsAboveSource.SteelTempestSwing2>(), Item.damage, 0, player.whoAmI);
             }
             sbPlayer.CurrentSwing = !sbPlayer.CurrentSwing;
-            int spriteDirection = ((Main.MouseWorld.X - player.Center.X) > 0) ? 1 : -1;
-            player.ChangeDir(spriteDirection);
+            /*int spriteDirection = ((Main.MouseWorld.X - player.Center.X) > 0) ? 1 : -1;
+            player.ChangeDir(spriteDirection);*/
         }
 
         private void CastMortalSteel(Player player, SpiritBlossomPlayer sbPlayer)
@@ -258,15 +256,19 @@ namespace SpiritBlossom.Items
 
         public override void AddRecipes()
         {
-            Mod starsAbove = ModLoader.GetMod("StarsAbove");
             Recipe recipe = CreateRecipe();
-            recipe.AddIngredient(ItemID.Cloud, 10);
+            recipe.AddIngredient(ItemID.Cloud, 25);
             recipe.AddIngredient(ItemID.FragmentSolar, 10);
             recipe.AddTile(TileID.LunarCraftingStation);
-            if (starsAbove != null)
+            if (ModLoader.TryGetMod("StarsAbove", out Mod starsAbove) && starsAbove.TryFind<ModItem>("PrismaticCore", out ModItem PrismaticCore) && starsAbove.TryFind<ModItem>("Unforgotten", out ModItem Unforgotten))
             {
-                recipe.AddIngredient(starsAbove.Find<ModItem>("PrismaticCore").Type, 25);
-                recipe.AddIngredient(starsAbove.Find<ModItem>("Unforgotten").Type, 1);
+                recipe.AddIngredient(PrismaticCore, 5);
+                recipe.AddIngredient(Unforgotten, 1);
+            }
+            else
+            {
+                recipe.AddIngredient(ItemID.Muramasa, 1);
+                recipe.AddIngredient(ItemID.Katana, 1);
             }
             recipe.Register();
         }
@@ -283,6 +285,8 @@ namespace SpiritBlossom.Items
             bool key4 = Main.keyState.IsKeyDown(Keys.D4);
             bool key5 = Main.keyState.IsKeyDown(Keys.D5);
 
+            string starsAboveSpatialIcon = (ModLoader.HasMod("StarsAbove")) ? "[i:StarsAbove/Spatial]" : "";
+
             if (!shiftPressed && !key1 && !key2 && !key3 && !key4 && !key5)
             {
                 // Show summary
@@ -294,7 +298,7 @@ namespace SpiritBlossom.Items
                     GetSoulUnboundSummary() + "\n" +
                     GetFateSealedSummary() + "\n" +
                     "Hold [1], [2], [3], [4], or [5] for more detailed descriptions, or hold [Shift] to show all descriptions\n" +
-                    "[i:StarsAbove/Spatial]"
+                    starsAboveSpatialIcon
                 );
                 tooltips.Insert(index + 1, summaryLine);
                 return;
@@ -355,6 +359,12 @@ namespace SpiritBlossom.Items
             }
             TooltipLine fateSealedDescLine = new(Mod, "FateSealedDesc", fateSealedDescription);
             tooltips.Insert(currentInsertIndex++, fateSealedDescLine);
+
+            if (ModLoader.HasMod("StarsAbove"))
+            {
+                TooltipLine spatialIcon = new(Mod, "SpatialIcon", "[i:StarsAbove/Spatial]");
+                tooltips.Insert(currentInsertIndex++, spatialIcon);
+            }
         }
 
         private string GetWayOfTheHunterSummary()
@@ -365,7 +375,7 @@ namespace SpiritBlossom.Items
         private string GetWayOfTheHunterExtended()
         {
             return "Hold your Primary Fire key to alternate between two katanas, [c/85C4DA:Steel Wind] and [c/F10079:Spirit Azakana]\n" +
-                   "[c/85C4DA:Steel Wind] has a 50% critical hit rate independent of other crit calculations\n" +
+                   "[c/85C4DA:Steel Wind] is guaranteed to critically strike, independent of other crit calculations\n" +
                    "[c/F10079:Spirit Azakana] has no knockback and cannot critically strike but repeats half the damage dealt as true damage";
         }
 

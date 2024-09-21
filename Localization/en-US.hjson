@@ -63,6 +63,8 @@ Mods: {
 			SpiritCleaveShieldDeactivate.DisplayName: Spirit Cleave Shield Deactivate
 			SpiritCleaveShield.DisplayName: Spirit Cleave Shield
 			MortalSteelFlash.DisplayName: Mortal Steel Flash
+			SteelTempestSwing.DisplayName: Steel Tempest Swing
+			SteelTempestSwing2.DisplayName: Steel Tempest Swing2
 		}
 
 		Buffs: {

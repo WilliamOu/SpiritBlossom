@@ -1,5 +1,4 @@
 displayName = [c/FF005E:Spirit Blossom] ([c/EC1B9D:The Stars Above] Addon)
 author = Shimadacat
-version = 1.2.8
-modReferences = StarsAbove
-weakReferences = CalamityMod
+version = 1.2.8.1
+weakReferences = StarsAbove, CalamityMod

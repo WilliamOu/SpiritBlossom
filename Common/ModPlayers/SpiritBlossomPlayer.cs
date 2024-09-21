@@ -28,7 +28,7 @@ namespace SpiritBlossom
         // [Q] Mortal Steel
         public const int MortalSteelCooldown = 80;
         public const int MortalSteelUseTime = 20;
-        public const int MortalSteelDashUseTime = 50;
+        public const int MortalSteelDashUseTime = 35;
         public const int MortalSteelDashDuration = 50;
         public const int MortalSteelDashWindup = 14;
         public const int MortalSteelDashFrameCount = 20;
@@ -145,6 +145,46 @@ namespace SpiritBlossom
             if (!Player.HasBuff<Buffs.SoulUnboundBuff>()) { return; }
 
             OnSoulUnboundHit(target, damageDone);
+        }
+
+        // Credit to PaperLuigi for OnHitNPCWithProj() and ModifyHitNPCWithProj() code
+        // Projectile code has been copied over in order to make Spirit Blossom not require a hard dependency with Stars Above
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (proj.type == ProjectileType<Projectiles.StarsAboveSource.SteelTempestSwing2>())
+            {
+                Rectangle textPos = new Rectangle((int)target.position.X, (int)target.position.Y - 20, target.width, target.height);
+                CombatText.NewText(textPos, new Color(255, 30, 30, 240), $"{damageDone / 2}", false, false);
+                if (target.life - damageDone / 2 > 1)
+                {
+                    target.life -= damageDone / 2;
+                }
+
+                if (!Player.HasBuff<Buffs.SoulUnboundBuff>()) { return; }
+
+                OnSoulUnboundHit(target, damageDone);
+            }
+        }
+
+        public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (proj.type == ProjectileType<Projectiles.StarsAboveSource.SteelTempestSwing>())
+            {
+                modifiers.SetCrit();
+                /*if (Main.rand.Next(0, 101) >= 50)
+                {
+                    modifiers.SetCrit();
+                }
+                else
+                {
+                    modifiers.DisableCrit();
+                }*/
+
+            }
+            if (proj.type == ProjectileType<Projectiles.StarsAboveSource.SteelTempestSwing2>())
+            {
+                modifiers.DisableCrit();
+            }
         }
 
         public override void ModifyMaxStats(out StatModifier health, out StatModifier mana)
