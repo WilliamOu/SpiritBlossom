@@ -1,8 +1,9 @@
 # Spirit Blossom
+![Demonstration](https://github.com/WilliamOu/SpiritBlossom/blob/main/Demonstration/SBDemo.gif)
+
 An addon for the Terraria mod The Stars Above, and a full overhaul of its 1.3 predecessor, UnforgottenBuffed.
 
 # Description 
-![Demonstration](https://github.com/WilliamOu/SpiritBlossom/blob/main/Demonstration/SBDemo.gif)
 Discover the Spirit Blossom swords and embrace the power of Yone from League of Legends in Terraria! Craft these elegant and lethal weapons using the Unforgotten from Stars Above, and experience a true-to-form recreation of Yone’s abilities, now fully revamped and updated for Terraria 1.4.
 
 A complete overhaul over previous versions, this mod is a true port of the character, bringing all of Yone’s iconic attacks, abilities, and stunning rotoscoped effects straight into your world. High risk, high reward; strike swiftly with his signature high-mobility moves and rushdown damage, but be prepared to master the swords' limited true melee range! Ready to challenge the Moon Lord with the full arsenal of our favorite Demon Hunter abilities?
@@ -15,10 +16,10 @@ I spent most of my summer developing this mod, mostly as a for-fun project. As s
 # Known Issues
 The mod is currently not multiplayer compatible, and various effects like Enhanced Mortal Steel's knockup, Soul Unbound's Death Mark, and Fate Sealed's pull cause enemies to disappear, among other odd side effects.
 
+# Credits
+Credit to PaperLuigi as well, the creator of The Stars Above, for giving me the permission to make this mod.
+
 # Legal
 Spirit Blossom was created under Riot Games' "Legal Jibber Jabber" policy using assets owned by Riot Games. Riot Games does not endorse or sponsor this project.
-
-# Miscellaneous
-Credit to PaperLuigi as well, the creator of The Stars Above, for giving me the permission to make this mod.
 
 
