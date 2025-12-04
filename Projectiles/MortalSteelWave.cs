@@ -11,6 +11,7 @@ using SpiritBlossom.Common.GlobalNPCs;
 using SpiritBlossom.Items;
 using static Terraria.ModLoader.ModContent;
 using static tModPorter.ProgressUpdate;
+using static SpiritBlossom.SpiritBlossom;
 
 namespace SpiritBlossom.Projectiles
 {
@@ -102,7 +103,7 @@ namespace SpiritBlossom.Projectiles
             Projectile.rotation = Projectile.velocity.ToRotation() + (Projectile.spriteDirection == 1 ? 0f : MathHelper.Pi);
             player.ChangeDir(Projectile.spriteDirection);
 
-            SBUtils.PrintCurrentFrame(currentFrame);
+            // SBUtils.PrintCurrentFrame(currentFrame);
 
             return true;
         }
@@ -136,8 +137,19 @@ namespace SpiritBlossom.Projectiles
 
             if (!target.boss && target.type != NPCID.TargetDummy)
             {
+                // 1. Apply Locally (for instant prediction)
                 target.GetGlobalNPC<SpiritBlossomCrowdControlGlobalNPCs>().InitializeMortalSteelValues(target);
                 target.AddBuff(BuffType<Buffs.SpiritBlossomCrowdControl>(), 300);
+
+                // 2. Send Packet to Server
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                {
+                    ModPacket packet = Mod.GetPacket();
+                    packet.Write((byte)SpiritBlossomMessageType.ApplyCrowdControl);
+                    packet.Write(target.whoAmI);
+                    packet.Write((byte)SpiritBlossomCrowdControlGlobalNPCs.CrowdControl.MortalSteel);
+                    packet.Send();
+                }
             }
 
             if (player.HeldItem.ModItem is SpiritSwords spiritBlossom)

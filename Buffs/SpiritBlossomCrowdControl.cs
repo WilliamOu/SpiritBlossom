@@ -17,17 +17,19 @@ namespace SpiritBlossom.Buffs
         {
             SpiritBlossomCrowdControlGlobalNPCs globalNPC = npc.GetGlobalNPC<SpiritBlossomCrowdControlGlobalNPCs>();
 
-            if (globalNPC.CurrentEffect == SpiritBlossomCrowdControlGlobalNPCs.CrowdControl.MortalSteel)
+            switch (globalNPC.CurrentEffect)
             {
-                MortalSteelKnockup(npc, globalNPC, ref buffIndex);
-            }
-            else if (globalNPC.CurrentEffect == SpiritBlossomCrowdControlGlobalNPCs.CrowdControl.FateSealedStun)
-            {
-                FateSealedStun(npc, globalNPC, ref buffIndex);
-            }
-            else
-            {
-                FateSealedPull(npc, globalNPC, ref buffIndex);
+                case SpiritBlossomCrowdControlGlobalNPCs.CrowdControl.MortalSteel:
+                    MortalSteelKnockup(npc, globalNPC, ref buffIndex);
+                    break;
+
+                case SpiritBlossomCrowdControlGlobalNPCs.CrowdControl.FateSealedStun:
+                    FateSealedStun(npc, globalNPC, ref buffIndex);
+                    break;
+
+                case SpiritBlossomCrowdControlGlobalNPCs.CrowdControl.FateSealedPull:
+                    FateSealedPull(npc, globalNPC, ref buffIndex);
+                    break;
             }
         }
 

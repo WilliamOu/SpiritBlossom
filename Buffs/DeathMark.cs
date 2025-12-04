@@ -22,7 +22,12 @@ namespace SpiritBlossom.Buffs
         public override void Update(NPC npc, ref int buffIndex)
         {
             DeathMarkGlobalNPCs globalNPC = npc.GetGlobalNPC<DeathMarkGlobalNPCs>();
+
+            // If the applier isn't synced yet, stop here to prevent the crash/despawn.
+            if (globalNPC.MarkApplier == null) return;
+
             SpiritBlossomPlayer sbPlayer = globalNPC.MarkApplier.GetModPlayer<SpiritBlossomPlayer>();
+
             if (globalNPC.Detonate)
             {
                 npc.buffTime[buffIndex] = 1;

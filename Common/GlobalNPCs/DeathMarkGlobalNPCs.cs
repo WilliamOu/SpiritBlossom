@@ -10,6 +10,8 @@ using SpiritBlossom.Projectiles;
 using Terraria.ID;
 using ReLogic.Content;
 using System.Runtime.CompilerServices;
+using System.IO;
+using Terraria.ModLoader.IO;
 
 namespace SpiritBlossom.Common.GlobalNPCs
 {
@@ -130,6 +132,28 @@ namespace SpiritBlossom.Common.GlobalNPCs
                 }
                 ExecuteFrame++;
             }
+        }
+
+        public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
+        {
+            // Sync the critical damage and state variables
+            binaryWriter.Write(StoredDamage);
+            binaryWriter.Write(MarkApplier != null ? MarkApplier.whoAmI : -1);
+
+            bitWriter.WriteBit(Detonate);
+        }
+
+        public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader)
+        {
+            StoredDamage = binaryReader.ReadSingle();
+
+            int playerID = binaryReader.ReadInt32();
+            if (playerID >= 0 && playerID < Main.maxPlayers)
+            {
+                MarkApplier = Main.player[playerID];
+            }
+
+            Detonate = bitReader.ReadBit();
         }
     }
 }

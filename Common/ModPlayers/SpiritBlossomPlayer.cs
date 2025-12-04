@@ -13,6 +13,8 @@ using StarsAbove.Buffs.Melee.Unforgotten;
 using SpiritBlossom.Common.GlobalNPCs;
 using System.Security.Cryptography;
 using SpiritBlossom.Projectiles;
+using Terraria.ID;
+using static SpiritBlossom.SpiritBlossom;
 
 namespace SpiritBlossom
 {
@@ -267,13 +269,31 @@ namespace SpiritBlossom
 
         public void OnSoulUnboundHit(NPC target, int damageDone)
         {
-            if (!target.HasBuff(BuffType<Buffs.DeathMark>()))
+            // Check if this is a fresh application BEFORE we add the buff
+            bool isNewApplication = !target.HasBuff(BuffType<Buffs.DeathMark>());
+
+            if (isNewApplication)
             {
                 target.GetGlobalNPC<DeathMarkGlobalNPCs>().Initialize(Player, target);
                 target.AddBuff(BuffType<Buffs.DeathMark>(), SoulUnboundDuration - SoulUnboundFrame);
                 SoundEngine.PlaySound(EMark with { Volume = SBUtils.GlobalSFXVolume * 2f });
             }
-            target.GetGlobalNPC<DeathMarkGlobalNPCs>().StackDamage(damageDone * SoulUnboundStoredDamageRatio, target);
+
+            float damageToStack = damageDone * SoulUnboundStoredDamageRatio;
+            target.GetGlobalNPC<DeathMarkGlobalNPCs>().StackDamage(damageToStack, target);
+
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                ModPacket packet = Mod.GetPacket();
+                packet.Write((byte)SpiritBlossomMessageType.DeathMarkStack);
+                packet.Write(target.whoAmI);
+                packet.Write(damageToStack);
+                packet.Write(Player.whoAmI);
+
+                packet.Write(isNewApplication);
+
+                packet.Send();
+            }
         }
 
         public void InitializeMortalSteelDashValues(Player player, Vector2 dashDirection)
@@ -311,13 +331,25 @@ namespace SpiritBlossom
 
             InitializeSoulUnboundRecastDashValues(player);
 
+            if (Main.netMode == NetmodeID.MultiplayerClient)
+            {
+                ModPacket packet = Mod.GetPacket();
+                packet.Write((byte)SpiritBlossomMessageType.DetonateMarks);
+                packet.Write(player.whoAmI);
+                packet.Send();
+            }
+
             bool anyNPCIsMarkedForDeath = false;
             foreach (NPC npc in Main.ActiveNPCs)
             {
                 if (npc.HasBuff(BuffType<Buffs.DeathMark>()))
                 {
-                    anyNPCIsMarkedForDeath = true;
-                    npc.GetGlobalNPC<DeathMarkGlobalNPCs>().DetonateMark(npc);
+                    var global = npc.GetGlobalNPC<DeathMarkGlobalNPCs>();
+                    if (global.MarkApplier == player)
+                    {
+                        anyNPCIsMarkedForDeath = true;
+                        global.DetonateMark(npc);
+                    }
                 }
             }
 

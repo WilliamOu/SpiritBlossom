@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using SpiritBlossom.Common.GlobalNPCs;
 using SpiritBlossom.Items;
 using static Terraria.ModLoader.ModContent;
+using static SpiritBlossom.SpiritBlossom;
 
 namespace SpiritBlossom.Projectiles
 {
@@ -119,22 +120,58 @@ namespace SpiritBlossom.Projectiles
         {
             Player player = Main.player[Projectile.owner];
             SpiritBlossomPlayer sbPlayer = player.GetModPlayer<SpiritBlossomPlayer>();
+
+            // Initial Stun Hit
             if (((float)currentFrame / ticksPerFrame) == 20f)
             {
                 SoundEngine.PlaySound(sbPlayer.RInitialHit with { Volume = SBUtils.GlobalSFXVolume });
 
                 if (target.type != NPCID.TargetDummy)
                 {
+                    // Apply Locally
                     target.GetGlobalNPC<SpiritBlossomCrowdControlGlobalNPCs>().InitializeFateSealedStunValues(target);
                     target.AddBuff(BuffType<Buffs.SpiritBlossomCrowdControl>(), 300);
+
+                    // Send Packet: STUN
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                    {
+                        ModPacket packet = Mod.GetPacket();
+                        packet.Write((byte)SpiritBlossomMessageType.ApplyCrowdControl);
+                        packet.Write(target.whoAmI);
+                        packet.Write((byte)SpiritBlossomCrowdControlGlobalNPCs.CrowdControl.FateSealedStun);
+                        packet.Send();
+                    }
                 }
 
                 sbPlayer.OnFateSealedHit(player, target);
             }
+            // The Residual Pull Hit
             else
             {
                 SoundEngine.PlaySound(sbPlayer.RResidualHit with { Volume = SBUtils.GlobalSFXVolume });
-                target.GetGlobalNPC<SpiritBlossomCrowdControlGlobalNPCs>().InitializeFateSealedPullValues(target, sbPlayer.FarthestEnemyFromPlayerDuringFateSealedCast.Item2, sbPlayer.PointBehindFarthestEnemyProjectionThatEnemiesArePulledTo, Vector2.Normalize(Projectile.velocity));
+
+                NPC farthestNPC = sbPlayer.FarthestEnemyFromPlayerDuringFateSealedCast.Item2;
+                Vector2 pullPoint = sbPlayer.PointBehindFarthestEnemyProjectionThatEnemiesArePulledTo;
+                Vector2 forwardVector = Vector2.Normalize(Projectile.velocity);
+
+                // Apply Locally
+                target.GetGlobalNPC<SpiritBlossomCrowdControlGlobalNPCs>().InitializeFateSealedPullValues(target, farthestNPC, pullPoint, forwardVector);
+
+                // Send Packet: PULL
+                if (Main.netMode == NetmodeID.MultiplayerClient)
+                {
+                    ModPacket packet = Mod.GetPacket();
+                    packet.Write((byte)SpiritBlossomMessageType.ApplyCrowdControl);
+                    packet.Write(target.whoAmI);
+                    packet.Write((byte)SpiritBlossomCrowdControlGlobalNPCs.CrowdControl.FateSealedPull);
+
+                    // Send the specific vector data needed for the calculation
+                    packet.Write(farthestNPC != null ? farthestNPC.whoAmI : -1);
+                    packet.WriteVector2(pullPoint);
+                    packet.WriteVector2(forwardVector);
+
+                    packet.Send();
+                }
             }
         }
 
