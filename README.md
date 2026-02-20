@@ -1,5 +1,5 @@
 # Spirit Blossom
-An addon for the Terraria mod The Stars Above, and a full overhaul of its 1.3 predecessor, UnforgottenBuffed.
+An addon for the Terraria mod The Stars Above, and a full overhaul of its 1.3 predecessor.
 ![Demonstration](https://github.com/WilliamOu/SpiritBlossom/blob/main/Demonstration/Demo.gif)
 
 # Description 
